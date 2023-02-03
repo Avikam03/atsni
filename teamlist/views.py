@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.template import loader
 
 from .models import Member
-from .forms import AddMemberForm, EditMemberForm
+from .forms import MemberForm
 
 
 # Create your views here.
@@ -19,7 +19,7 @@ def add(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = AddMemberForm(request.POST)
+        form = MemberForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
@@ -42,9 +42,14 @@ def add(request):
         else:
             print(form.errors)
     else:
-        form = AddMemberForm()
+        form = MemberForm(initial={'admin': 'False'})
     return render(request, 'teamlist/add.html', {'form': form})
 
+def delete(request, id):
+    member = get_object_or_404(Member, id=id)
+    if request.method == 'POST' and member:
+        member.delete()
+        return redirect('/')
 
 def edit(request, id):
     member = get_object_or_404(Member, id=id)
@@ -52,7 +57,7 @@ def edit(request, id):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = EditMemberForm(request.POST)
+        form = MemberForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
@@ -73,5 +78,5 @@ def edit(request, id):
         else:
             print(form.errors)
     else:
-        form = EditMemberForm({ 'first_name': member.first_name, 'last_name': member.last_name, 'phone': member.phone, 'email': member.email, 'admin': member.admin})
+        form = MemberForm({ 'first_name': member.first_name, 'last_name': member.last_name, 'phone': member.phone, 'email': member.email, 'admin': member.admin})
     return render(request, 'teamlist/edit.html', {'member': member, 'form': form})

@@ -7,3 +7,8 @@
     {{ form }}
     <input type="submit" value="Save">
 </form>
+
+<form action="/delete/{{ member.id }}/" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Delete">
+</form>
