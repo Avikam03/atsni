@@ -1,0 +1,9 @@
+<h1> Edit Team Member </h1>
+
+<h2> Info </h2>
+
+<form action="/edit/{{ member.id }}/" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Save">
+</form>
