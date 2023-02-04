@@ -23,6 +23,7 @@ git clone https://github.com/Avikam03/atsni.git
 Edge cases taken care of:
 1. User can't delete themself
 2. User can't set their own role to admin if they are a regular user
+3. User can't change their own email or someone else's email to an email that already exists
 
 ### Screenshots
 ![](https://i.imgur.com/wPGoCie.png)
