@@ -1,4 +1,13 @@
-<a href="/">Home</a>
+{% extends "base.html" %}
+
+{% block content %}
+
+<a href="/">< Home</a>
+<br></br>
 {% if error %}
-{{ error }}
+    <h1 class="text-4xl font-extrabold text-black">
+        {{ error }}
+    </h1>
 {% endif %}
+
+{% endblock %}

@@ -71,7 +71,6 @@ def login(request):
 
 def index(request):
     if request.user.is_authenticated:
-        print("authenticated")
         user_list = MyUser.objects.all()
         context = {
             'user_list': user_list,
@@ -79,7 +78,6 @@ def index(request):
         }
         return render(request, 'teamlist/index.html', context)
     else:
-        print("not authenticated")
         return render(request, 'teamlist/landing.html', {})
 
 
