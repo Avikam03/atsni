@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate
 from django.template import loader
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth import login as django_login
+import re
 
 from .models import MyUser
 from .forms import UserForm
@@ -27,6 +28,11 @@ def register(request):
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
             phone = form.cleaned_data['phone']
+
+            phone_regex = '^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$'
+            if not re.match(phone_regex, phone):
+                return render(request, 'teamlist/register.html', {'form': form, 'error': 'Invalid phone number!'})
+
             email = form.cleaned_data['email']
             admin = form.cleaned_data['admin']
 
@@ -90,6 +96,11 @@ def add(request):
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
             phone = form.cleaned_data['phone']
+
+            phone_regex = '^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$'
+            if not re.match(phone_regex, phone):
+                return render(request, 'teamlist/add.html', {'form': form, 'error': 'Invalid phone number!'})
+
             email = form.cleaned_data['email']
             admin = form.cleaned_data['admin']
 
@@ -141,6 +152,11 @@ def edit(request, id):
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
             phone = form.cleaned_data['phone']
+
+            phone_regex = '^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$'
+            if not re.match(phone_regex, phone):
+                return render(request, 'teamlist/edit.html', {'form': form, 'error': 'Invalid phone number!'})
+
             email = form.cleaned_data['email']
             admin = form.cleaned_data['admin']
 

@@ -1,8 +1,14 @@
+<a href="/">Home</a>
+<br></br>
 <h1>Add a team member</h1>
 
 <form action="/add/" method="post">
     {% csrf_token %}
     {{ form }}
+    {% if error %}
+        {{ error }}
+    {% endif %}
+    <br></br>
     <input type="submit" value="Save">
 </form>
 

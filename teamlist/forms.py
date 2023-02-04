@@ -5,7 +5,7 @@ class UserForm(forms.Form):
 
     first_name = forms.CharField(label='First Name', max_length=30)
     last_name = forms.CharField(label='Last Name', max_length=30)
-    phone = forms.CharField(max_length=12)
+    phone = forms.CharField(max_length=15)
     email = forms.EmailField()
 
     CHOICES = [
