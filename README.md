@@ -4,14 +4,11 @@
 ```
 git clone https://github.com/Avikam03/atsni.git
 ```
-2. `$ python3 manage.py makemigrations`
-3. `$ python3 manage.py migrate`
-4. Install the django-tailwind package via pip: 
-`$ pip install django-tailwind`
-5. `$ python3 manage.py tailwind install`
-6. `$ python3 manage.py tailwind start` (keep this running in a separate terminal)
-7. `$ python3 manage.py runserver`
-8. Open `http://localhost:8000/` in your browser
+2. `chmod +x ./install.sh ./run.sh`
+3. `./install.sh` (this will install all the dependencies)
+4. `./run.sh` (this will run two processes simultaneously - one in the background, one on hosts the server on port 8000)
+5. Open `http://localhost:8000/` in your browser
+6. Press `Ctrl + C` **twice** to stop the processes
 
 
 ### Note:
