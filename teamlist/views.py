@@ -46,12 +46,17 @@ def register(request):
             email = form.cleaned_data['email']
             admin = form.cleaned_data['admin']
 
-            user = MyUser.objects.create_user(email, first_name, last_name, phone, admin)
+            try:
+                user = MyUser.objects.create_user(email, first_name, last_name, phone, admin)
 
-            user.save()
-            django_login(request, user)
+                user.save()
+                django_login(request, user)
 
-            return redirect('/')
+                return redirect('/')
+            except:
+                return render(request, 'teamlist/register.html', {'form': form, 'error': 'User with this email already exists!'})
+
+            
         else:
             print(form.errors)
     else:

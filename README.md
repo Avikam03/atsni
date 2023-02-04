@@ -1,10 +1,3 @@
-### Screenshots
-![](https://i.imgur.com/wPGoCie.png)
-![](https://i.imgur.com/duM0vG8.png)
-![](https://i.imgur.com/MeT407J.png)
-![](https://i.imgur.com/Xz8A2T2.png)
-![](https://i.imgur.com/dDqf4jc.png)
-
 ### Steps to view project deployed locally
 
 1. Clone the repository
@@ -26,3 +19,10 @@ git clone https://github.com/Avikam03/atsni.git
 Edge cases taken care of:
 1. User can't delete themself
 2. User can't set their own role to admin if they are a regular user
+
+### Screenshots
+![](https://i.imgur.com/wPGoCie.png)
+![](https://i.imgur.com/duM0vG8.png)
+![](https://i.imgur.com/MeT407J.png)
+![](https://i.imgur.com/Xz8A2T2.png)
+![](https://i.imgur.com/dDqf4jc.png)

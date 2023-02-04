@@ -1,7 +1,6 @@
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import gettext_lazy as _
 
-
 class CustomUserManager(BaseUserManager):
     """
     Custom user model manager where email is the unique identifiers
@@ -14,6 +13,11 @@ class CustomUserManager(BaseUserManager):
         if not email or not first_name or not last_name or not phone or not admin:
             raise ValueError(_("All values are required"))
         email = self.normalize_email(email)
+
+        temp = self.model.objects.get(email=email)
+        if temp:
+            raise ValueError(_("User  with this email already exists"))
+        
 
         user = self.model(email=email, first_name=first_name, last_name=last_name, phone=phone, admin=admin)
         user.save()
