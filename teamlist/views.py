@@ -209,6 +209,10 @@ def edit(request, id):
                 if (request.user.admin == False):
                     return render(request, 'teamlist/error.html', {'error': 'You do not have permission to edit users as you\'re not an admin!'})
 
+            if (user.email != email):
+                if (MyUser.objects.filter(email=email).exists()):
+                    return render(request, 'teamlist/edit.html', {'form': form, 'error': 'Email already exists!'})
+
             user.first_name = first_name
             user.last_name = last_name
             user.phone = phone
