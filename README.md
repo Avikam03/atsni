@@ -11,9 +11,11 @@ git clone https://github.com/Avikam03/atsni.git
 
 
 ### Note:
-1. There is no proper mode of authentication for the project. You simply need the email address of an existin guser to log into the account of that user.
-2. You have to start by registering a user.
+1. The project starts by registering a user (preferably admin, to test all features)
+2. To make things easy, you simply need the email address of an existing user to log into the account of a particular user. (password can be easily configured by making changes to the user model)
+3. Since it was communicated that for the sake of this project there is only one team, it has been made so that all the users present are in the team, and when a member is added to the team, a user of their details is created.
 
 ### Testing 
 Edge cases taken care of:
-1. User can't delete their own 
+1. User can't delete themself
+2. User can't set their own role to admin if they are a regular user
