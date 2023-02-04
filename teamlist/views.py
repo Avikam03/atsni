@@ -8,14 +8,24 @@ import re
 from .models import MyUser
 from .forms import UserForm
 
-
-
 # Create your views here.
 
+
+"""
+logout(request) 
+    the function implements logout functionality for a user in Django.
+    It uses an inbuilt function to logout the user, then redirects to the home page.
+"""
 def logout(request):
     django_logout(request)
     return redirect('/')
 
+"""
+register(request)
+    the function implements the registration functionality for a user in Django.
+    It uses a form to get the user's information, then creates a new user in the database.
+    It then logs the user in and redirects to the home page.
+"""
 def register(request):
     if request.user.is_authenticated:
         return redirect('/')
@@ -48,6 +58,13 @@ def register(request):
         form = UserForm()
         return render(request, 'teamlist/register.html', {'form': form})
 
+"""
+login(request)
+    the function implements the login functionality for a user in Django.
+    It uses a form to get the user's email, then authenticates the user.
+    If the user is authenticated, it logs the user in and redirects to the home page.
+    If the user is not authenticated, it redirects to the login page with an error message.
+"""
 def login(request):
     if request.user.is_authenticated:
         return redirect('/')
@@ -68,7 +85,12 @@ def login(request):
     
     return render(request, 'teamlist/login.html', {})
 
-
+"""
+index(request)
+        This function is the main view for the application.
+        If user is authenticated, it displays the list of users in the team.
+        Else, it displays the landing page.
+"""
 def index(request):
     if request.user.is_authenticated:
         user_list = MyUser.objects.all()
@@ -81,6 +103,13 @@ def index(request):
         return render(request, 'teamlist/landing.html', {})
 
 
+"""
+add(request)
+    This function implements the add user (member) functionality.
+
+    If the user is not authenticated, it redirects to the home page.
+    If the user is authenticated, it displays the form to add a new user.
+"""
 def add(request):
     if not request.user.is_authenticated:
         return redirect('/')
@@ -118,6 +147,11 @@ def add(request):
         form = UserForm(initial={'admin': 'False'})
     return render(request, 'teamlist/add.html', {'form': form})
 
+"""
+delete(request, id)
+    This function implements the delete user (member) functionality.
+    It deletes the user with the given id if the current logged in user has the permissioon to do so
+"""
 def delete(request, id):
     if not request.user.is_authenticated:
         return redirect('/')
@@ -133,6 +167,11 @@ def delete(request, id):
         else:
             return render(request, 'teamlist/error.html', {'error': 'You do not have permission to delete users as you\'re not an admin!'})
 
+"""
+edit(request, id)
+    This function implements the edit user (member) functionality.
+    It edits the user with the given id if the current logged in user has the permissioon to do so
+"""
 def edit(request, id):
     if not request.user.is_authenticated:
         return redirect('/')
