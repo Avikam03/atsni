@@ -1,3 +1,10 @@
+### Screenshots
+![](https://i.imgur.com/wPGoCie.png)
+![](https://i.imgur.com/duM0vG8.png)
+![](https://i.imgur.com/MeT407J.png)
+![](https://i.imgur.com/Xz8A2T2.png)
+![](https://i.imgur.com/dDqf4jc.png)
+
 ### Steps to view project deployed locally
 
 1. Clone the repository
