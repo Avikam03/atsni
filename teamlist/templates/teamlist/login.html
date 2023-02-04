@@ -1,0 +1,10 @@
+<h1> Login </h1>
+
+<form action="/login/" method="post">
+    {% csrf_token %}
+    <p> {{ error }}</p>
+    <label for="email">Email:</label>
+    <input type="email" name="email" value="{{ email }}"><br><br>
+
+    <input type="submit" value="Save">
+</form>

@@ -1,8 +1,7 @@
-<h1>Add a team member</h1>
+<h1> Register </h1>
 
-<form action="/add/" method="post">
+<form action="/register/" method="post">
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Save">
 </form>
-

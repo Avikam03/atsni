@@ -1,5 +1,7 @@
+<a href="/logout"> Logout </a>
+<br></br>
 <a href="/add">Add a new member</a>
-{% if member_list %}
+{% if user_list %}
     <h1>Team members</h1>
     {% if length > 1 %}
         <h2>You have {{ length }} team members.</h2>
@@ -8,16 +10,16 @@
     {% endif %}
 
     <ul>
-    {% for member in member_list %}
-        <a href="/edit/{{ member.id }}/">
+    {% for user in user_list %}
+        <a href="/edit/{{ user.id }}/">
             <li>
-                {{ member.first_name }} {{ member.last_name }}
-                {% if member.admin %}
+                {{ user.first_name }} {{ user.last_name }}
+                {% if user.admin %}
                     <span> (admin) </span>
                 {% endif %}
             </li>
-            <p> {{ member.phone }} </p>
-            <p> {{ member.email }} </p>
+            <p> {{ user.phone }} </p>
+            <p> {{ user.email }} </p>
         </a>
     {% endfor %}
     </ul>
