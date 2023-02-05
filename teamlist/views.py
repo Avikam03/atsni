@@ -130,12 +130,15 @@ def add(request):
             last_name = form.cleaned_data['last_name']
             phone = form.cleaned_data['phone']
 
-            phone_regex = '^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$'
-            if not re.match(phone_regex, phone):
-                return render(request, 'teamlist/add.html', {'form': form, 'error': 'Invalid phone number!'})
+            if phone[3] != '-' or phone[7] != '-':
+                return render(request, 'teamlist/add.html', {'form': form, 'error': 'Invalid phone number! Please use the format 123-456-7890'})
 
             email = form.cleaned_data['email']
             admin = form.cleaned_data['admin']
+
+            temp = MyUser.objects.all().filter(email=email)
+            if len(temp) > 0:
+                return render(request, 'teamlist/register.html', {'form': form, 'error': 'User with this email already exists!'})
 
             user = MyUser(
                 first_name=first_name,
@@ -149,6 +152,7 @@ def add(request):
             return redirect('/')
         else:
             print(form.errors)
+            return render(request, 'teamlist/add.html', {'form': form, 'formerrors': form.errors})
     else:
         form = UserForm(initial={'admin': 'False'})
     return render(request, 'teamlist/add.html', {'form': form})
@@ -196,9 +200,8 @@ def edit(request, id):
             last_name = form.cleaned_data['last_name']
             phone = form.cleaned_data['phone']
 
-            phone_regex = '^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$'
-            if not re.match(phone_regex, phone):
-                return render(request, 'teamlist/edit.html', {'form': form, 'error': 'Invalid phone number!'})
+            if phone[3] != '-' or phone[7] != '-':
+                return render(request, 'teamlist/edit.html', {'form': form, 'error': 'Invalid phone number! Please use the format 123-456-7890'})
 
             email = form.cleaned_data['email']
             admin = form.cleaned_data['admin']
@@ -218,6 +221,7 @@ def edit(request, id):
             user.last_name = last_name
             user.phone = phone
             user.email = email
+
             if (admin == 'True'):
                 user.admin = True
             else:
@@ -227,6 +231,8 @@ def edit(request, id):
             return redirect('/')
         else:
             print(form.errors)
+            return render(request, 'teamlist/edit.html', {'form': form, 'formerrors': form.errors})
+            
     else:
         form = UserForm({ 'first_name': user.first_name, 'last_name': user.last_name, 'phone': user.phone, 'email': user.email, 'admin': user.admin})
     return render(request, 'teamlist/edit.html', {'user': user, 'form': form})
