@@ -3,7 +3,6 @@ from django.contrib.auth import authenticate
 from django.template import loader
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth import login as django_login
-import re
 
 from .models import MyUser
 from .forms import UserForm
@@ -39,7 +38,7 @@ def register(request):
             last_name = form.cleaned_data['last_name']
             phone = form.cleaned_data['phone']
 
-            if phone[3] != '-' or phone[7] != '-':
+            if (phone.count('-') != 2) or (phone[3] != '-' or phone[7] != '-'):
                 return render(request, 'teamlist/register.html', {'form': form, 'error': 'Invalid phone number! Please use the format 123-456-7890'})
 
             email = form.cleaned_data['email']
@@ -128,7 +127,7 @@ def add(request):
             last_name = form.cleaned_data['last_name']
             phone = form.cleaned_data['phone']
 
-            if phone[3] != '-' or phone[7] != '-':
+            if (phone.count('-') != 2) or (phone[3] != '-' or phone[7] != '-'):
                 return render(request, 'teamlist/add.html', {'form': form, 'error': 'Invalid phone number! Please use the format 123-456-7890'})
 
             email = form.cleaned_data['email']
@@ -198,7 +197,7 @@ def edit(request, id):
             last_name = form.cleaned_data['last_name']
             phone = form.cleaned_data['phone']
 
-            if phone[3] != '-' or phone[7] != '-':
+            if (phone.count('-') != 2) or (phone[3] != '-' or phone[7] != '-'):
                 return render(request, 'teamlist/edit.html', {'user': user, 'form': form, 'error': 'Invalid phone number! Please use the format 123-456-7890'})
 
             email = form.cleaned_data['email']
