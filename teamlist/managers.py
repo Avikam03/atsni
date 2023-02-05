@@ -14,11 +14,6 @@ class CustomUserManager(BaseUserManager):
             raise ValueError(_("All values are required"))
         email = self.normalize_email(email)
 
-        temp = self.model.objects.get(email=email)
-        if temp:
-            raise ValueError(_("User  with this email already exists"))
-        
-
         user = self.model(email=email, first_name=first_name, last_name=last_name, phone=phone, admin=admin)
         user.save()
         return user

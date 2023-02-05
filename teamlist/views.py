@@ -39,26 +39,27 @@ def register(request):
             last_name = form.cleaned_data['last_name']
             phone = form.cleaned_data['phone']
 
-            phone_regex = '^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$'
-            if not re.match(phone_regex, phone):
-                return render(request, 'teamlist/register.html', {'form': form, 'error': 'Invalid phone number!'})
+            if phone[3] != '-' or phone[7] != '-':
+                return render(request, 'teamlist/register.html', {'form': form, 'error': 'Invalid phone number! Please use the format 123-456-7890'})
 
             email = form.cleaned_data['email']
             admin = form.cleaned_data['admin']
 
-            try:
-                user = MyUser.objects.create_user(email, first_name, last_name, phone, admin)
+            temp = MyUser.objects.all().filter(email=email)
+            print(temp)
 
-                user.save()
-                django_login(request, user)
-
-                return redirect('/')
-            except:
+            if len(temp) > 0:
                 return render(request, 'teamlist/register.html', {'form': form, 'error': 'User with this email already exists!'})
+            
+            user = MyUser.objects.create_user(email, first_name, last_name, phone, admin)
+            user.save()
+            django_login(request, user)
 
+            return redirect('/')
             
         else:
             print(form.errors)
+            return render(request, 'teamlist/register.html', {'form': form, 'formerrors': form.errors})
     else:
         form = UserForm()
         return render(request, 'teamlist/register.html', {'form': form})

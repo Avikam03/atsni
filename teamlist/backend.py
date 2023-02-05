@@ -15,10 +15,8 @@ class CustomBackend:
             if user:
                 print("authenticated!")
                 return user
-            print("failed!")
             return None
         except:
-            print("error failed!")
             return None
 
     def get_user(self, user_id):
