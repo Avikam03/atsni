@@ -76,10 +76,8 @@ def login(request):
         return redirect('/')
 
     if request.method == 'POST':
-        print("Hello")
         email = request.POST['email']
         user = authenticate(email)
-        print("Hello2")
 
         if user is not None:
             print("authenticated here!")
@@ -201,7 +199,7 @@ def edit(request, id):
             phone = form.cleaned_data['phone']
 
             if phone[3] != '-' or phone[7] != '-':
-                return render(request, 'teamlist/edit.html', {'form': form, 'error': 'Invalid phone number! Please use the format 123-456-7890'})
+                return render(request, 'teamlist/edit.html', {'user': user, 'form': form, 'error': 'Invalid phone number! Please use the format 123-456-7890'})
 
             email = form.cleaned_data['email']
             admin = form.cleaned_data['admin']
@@ -212,10 +210,10 @@ def edit(request, id):
             else:
                 if (request.user.admin == False):
                     return render(request, 'teamlist/error.html', {'error': 'You do not have permission to edit users as you\'re not an admin!'})
-
+            
             if (user.email != email):
                 if (MyUser.objects.filter(email=email).exists()):
-                    return render(request, 'teamlist/edit.html', {'form': form, 'error': 'Email already exists!'})
+                    return render(request, 'teamlist/edit.html', {'user': user, 'form': form, 'error': 'Email already exists!'})
 
             user.first_name = first_name
             user.last_name = last_name
@@ -231,7 +229,7 @@ def edit(request, id):
             return redirect('/')
         else:
             print(form.errors)
-            return render(request, 'teamlist/edit.html', {'form': form, 'formerrors': form.errors})
+            return render(request, 'teamlist/edit.html', {'user': user, 'form': form, 'formerrors': form.errors})
             
     else:
         form = UserForm({ 'first_name': user.first_name, 'last_name': user.last_name, 'phone': user.phone, 'email': user.email, 'admin': user.admin})
