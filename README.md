@@ -6,9 +6,15 @@ git clone https://github.com/Avikam03/atsni.git
 ```
 2. `chmod +x ./install.sh ./run.sh`
 3. `./install.sh` (this will install all the dependencies)
-4. `./run.sh` (this will run two processes simultaneously - one in the background, one on hosts the server on port 8000)
+4. `./run.sh` (this will run two processes simultaneously - one that hosts the django server on port 8000, and another that is needed for tailwind to work)
 5. Open `http://localhost:8000/` in your browser
 6. Press `Ctrl + C` **twice** to stop the processes
+
+Optional:
+1. Create superuser to view admin panel
+```
+python manage.py createsuperuser
+```
 
 
 ### Note:
