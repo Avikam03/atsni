@@ -7,8 +7,24 @@ from django.contrib.auth import login as django_login
 from .models import MyUser
 from .forms import UserForm
 
-# Create your views here.
 
+def check_phone_number(phone):
+    if (phone.count('-') != 2) or (phone[3] != '-' or phone[7] != '-'):
+        return False
+
+    # also check if 0 to 2 is number, 4 to 6 is number, 8 to 11 is number
+    if (phone[0] not in '0123456789') or (phone[1] not in '0123456789') or (phone[2] not in '0123456789'):
+        return False
+    if (phone[4] not in '0123456789') or (phone[5] not in '0123456789') or (phone[6] not in '0123456789'):
+        return False
+    if (phone[8] not in '0123456789') or (phone[9] not in '0123456789') or (phone[10] not in '0123456789') or (phone[11] not in '0123456789'):
+        return False
+        
+    return True
+
+
+
+# Create your views here.
 
 """
 logout(request) 
@@ -37,13 +53,12 @@ def register(request):
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
             phone = form.cleaned_data['phone']
-
-            if (phone.count('-') != 2) or (phone[3] != '-' or phone[7] != '-'):
-                return render(request, 'teamlist/register.html', {'form': form, 'error': 'Invalid phone number! Please use the format 123-456-7890'})
-
             email = form.cleaned_data['email']
             admin = form.cleaned_data['admin']
 
+            if not check_phone_number(phone):
+                return render(request, 'teamlist/register.html', {'form': form, 'error': 'Invalid phone number! Please use the format 123-456-7890'})
+            
             temp = MyUser.objects.all().filter(email=email)
             print(temp)
 
@@ -126,12 +141,11 @@ def add(request):
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
             phone = form.cleaned_data['phone']
-
-            if (phone.count('-') != 2) or (phone[3] != '-' or phone[7] != '-'):
-                return render(request, 'teamlist/add.html', {'form': form, 'error': 'Invalid phone number! Please use the format 123-456-7890'})
-
             email = form.cleaned_data['email']
             admin = form.cleaned_data['admin']
+
+            if not check_phone_number(phone):
+                return render(request, 'teamlist/add.html', {'form': form, 'error': 'Invalid phone number! Please use the format 123-456-7890'})
 
             temp = MyUser.objects.all().filter(email=email)
             if len(temp) > 0:
@@ -196,13 +210,12 @@ def edit(request, id):
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
             phone = form.cleaned_data['phone']
-
-            if (phone.count('-') != 2) or (phone[3] != '-' or phone[7] != '-'):
-                return render(request, 'teamlist/edit.html', {'user': user, 'form': form, 'error': 'Invalid phone number! Please use the format 123-456-7890'})
-
             email = form.cleaned_data['email']
             admin = form.cleaned_data['admin']
 
+            if not check_phone_number(phone):
+                return render(request, 'teamlist/edit.html', {'user': user, 'form': form, 'error': 'Invalid phone number! Please use the format 123-456-7890'})
+            
             if (request.user.id == user.id):
                 if (('True' == admin) and (False == request.user.admin)):
                     return render(request, 'teamlist/error.html', {'error': 'You do not have permission to change your own admin status!'})
